@@ -1,48 +1,83 @@
-import React, {Component} from 'react';
-import './App.css';
-import Movie from './Movie'
+import React, {Component, Fragment} from 'react';
+import {createPortal} from 'react-dom';
 
-class App extends Component {
-    state = {};
-
-    componentDidMount() {
-        this._getMovies();
-    }
-
-    _renderMovies = () => {
-        const movies = this.state.movies.map(movie => {
-            return <Movie title={movie.title_english}
-                   poster={movie.medium_cover_image}
-                   genres={movie.genres}
-                   synopsis={movie.synopsis}
-                   key={movie.id}/>
-        });
-        return movies;
+const BoundaryHOC = ProtectedComponent =>{
+  return class Boundary extends Component {
+    state = {
+      hasError: false
     };
-
-    _getMovies = async () => {
-        const movies = await this._callApi()
-            .then(response => response.json())
-            .then(json => json.data.movies);
-
-        this.setState({
-            movies
-        })
-    }
-
-    _callApi = () => {
-        return fetch('https://yts.lt/api/v2/list_movies.json?sort_by=download_count')
-            .then(response => response)
-            .catch(err => console.log((err)));
-    }
-
+    componentDidCatch = (error, errorInfo) => {
+      this.setState({
+        hasError: true
+      });
+    };
     render() {
-        const { movies } = this.state;
-        return (
-            <div className={movies ? "App" : "App--loading"}>
-                {movies ? this._renderMovies() : 'Loading'}
-            </div>
-        );
+      const {hasError} = this.state;
+      if(hasError){
+        return <ErrorFallback/>;
+      }else{
+        return <ProtectedComponent/>;
+      }
     }
+  }
 }
-export default App;
+
+class ErrorMaker extends Component {
+  state = {
+    friends: [
+      'jisu', 'dal', 'fm', 'sisu'
+    ]
+  };
+  componentDidMount = () => {
+    setTimeout(() => {
+          this.setState({
+            friends: undefined
+          })
+        }, 2000
+    );
+  };
+
+  render() {
+    const {friends} = this.state;
+    return friends.map(friend => ` ${friend} `);
+  }
+}
+const PErrorMaker = BoundaryHOC(ErrorMaker);
+
+class Portals extends  Component{
+  render() {
+    return (
+        createPortal(
+            <Message/>,
+            document.getElementById('touchme')
+        )
+    );
+  }
+}
+const EPortals = BoundaryHOC(Portals);
+
+const Message = () => 'just touched it!';
+
+class ReturnTypes extends Component {
+  render() {
+    return (
+        "Hello"
+    );
+  }
+}
+
+const ErrorFallback = () => 'Sorry something went wrong!';
+
+class App extends Component{
+  render() {
+    return (
+        <Fragment>
+          <ReturnTypes/>
+          <EPortals />
+          <PErrorMaker />
+        </Fragment>
+    );
+  }
+}
+
+export default BoundaryHOC(App);
