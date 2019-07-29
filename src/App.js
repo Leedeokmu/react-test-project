@@ -1,83 +1,34 @@
-import React, {Component, Fragment} from 'react';
-import {createPortal} from 'react-dom';
+import React, {Component} from 'react';
 
-const BoundaryHOC = ProtectedComponent =>{
-  return class Boundary extends Component {
+const MAX_PIZZAS = 20;
+
+class Controlled extends  Component{
     state = {
-      hasError: false
-    };
-    componentDidCatch = (error, errorInfo) => {
-      this.setState({
-        hasError: true
-      });
-    };
-    render() {
-      const {hasError} = this.state;
-      if(hasError){
-        return <ErrorFallback/>;
-      }else{
-        return <ProtectedComponent/>;
-      }
+        pizzas: 10
     }
-  }
+
+    render() {
+        const {pizzas} = this.state;
+        return (
+            <button onClick={this._handleClick}>{`I have eaten ${pizzas} ${pizzas === 1 ? "pizza" :" pizzas"}`}</button>
+        );
+    }
+    _handleClick = () => {
+        this.setState(this._eatPizza);
+    };
+
+    _eatPizza = (state, props) => {
+        const {pizzas} = state;
+        return pizzas < MAX_PIZZAS ? {pizzas: pizzas + 1} : null;
+    };
+
 }
-
-class ErrorMaker extends Component {
-  state = {
-    friends: [
-      'jisu', 'dal', 'fm', 'sisu'
-    ]
-  };
-  componentDidMount = () => {
-    setTimeout(() => {
-          this.setState({
-            friends: undefined
-          })
-        }, 2000
-    );
-  };
-
-  render() {
-    const {friends} = this.state;
-    return friends.map(friend => ` ${friend} `);
-  }
-}
-const PErrorMaker = BoundaryHOC(ErrorMaker);
-
-class Portals extends  Component{
-  render() {
-    return (
-        createPortal(
-            <Message/>,
-            document.getElementById('touchme')
-        )
-    );
-  }
-}
-const EPortals = BoundaryHOC(Portals);
-
-const Message = () => 'just touched it!';
-
-class ReturnTypes extends Component {
-  render() {
-    return (
-        "Hello"
-    );
-  }
-}
-
-const ErrorFallback = () => 'Sorry something went wrong!';
-
 class App extends Component{
   render() {
     return (
-        <Fragment>
-          <ReturnTypes/>
-          <EPortals />
-          <PErrorMaker />
-        </Fragment>
+        <Controlled/>
     );
   }
 }
 
-export default BoundaryHOC(App);
+export default App;
