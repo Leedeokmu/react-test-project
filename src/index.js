@@ -1,34 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-
-const useClick = (onClick) => {
-    const element = useRef();
-    useEffect(() => {
-        if (element.current) {
-            element.current.addEventListener('click', onClick);
-        }
-        return () => {
-            if (element.current) {
-                element.current.removeEventListener('click', onClick);
-            }
-        }
-    }, []);
-    if(typeof onClick !== 'function'){
-        return;
-    }
-
-    return element;
-}
+import useAxios from './useAxios'
 
 const App = () => {
-    const sayHello = () => console.log('Hello');
-    const title = useClick(sayHello);
-
+    const {loading, data, error, refetch} = useAxios({url: 'https://yts.lt/api/v2/list_movies.json'})
     return (
         <div className='App'>
-            <h1 ref={title}>Hello</h1>
+            <h1>{data && data.status}</h1>
+            <h1>{loading && 'Loading'}</h1>
+            <button onClick={refetch}>refetch it!</button>
+
         </div>
-    )
+    );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
