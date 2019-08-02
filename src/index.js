@@ -1,17 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import useAxios from './useAxios'
 
 const App = () => {
-    const {loading, data, error, refetch} = useAxios({url: 'https://yts.lt/api/v2/list_movies.json'})
     return (
         <div className='App'>
-            <h1>{data && data.status}</h1>
-            <h1>{loading && 'Loading'}</h1>
-            <button onClick={refetch}>refetch it!</button>
-
+            <Average/>
         </div>
     );
 }
+
+const getAverage = numbers => {
+    console.log('평균값 계산중..');
+    if (numbers.length === 0) return 0;
+    const sum = numbers.reduce((a, b) => a + b);
+    return sum / numbers.length;
+};
+
+const Average = () => {
+    const [list, setList] = useState([]);
+    const [number, setNumber] = useState('');
+
+    const onChange = useCallback((e) => {
+        setNumber(e.target.value);
+    }, []);
+    const onInsert = useCallback(e => {
+        const nextList = list.concat(parseInt(number));
+        setList(nextList);
+        setNumber('');
+    }, [list, number]);
+    const avg = useMemo(() => getAverage(list), [list])
+
+    return (
+        <div>
+            <input value={number} onChange={onChange} />
+            <button onClick={onInsert}>등록</button>
+            <ul>
+                {list.map((value, index) => (
+                    <li key={index}>{value}</li>
+                ))}
+            </ul>
+            <div>
+                <b>평균 값:</b> {avg}
+            </div>
+        </div>
+    );
+};
 
 ReactDOM.render(<App />, document.getElementById('root'));
