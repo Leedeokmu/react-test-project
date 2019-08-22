@@ -13,7 +13,7 @@ export const useScroll = () => {
     useEffect(() => {
         window.addEventListener('scroll', changeScroll);
         return () => {
-            window.removeventListener('scroll', changeScroll);
+            window.removeEventListener('scroll', changeScroll);
         }
     }, [])
 
