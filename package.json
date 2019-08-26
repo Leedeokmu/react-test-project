@@ -6,11 +6,16 @@
     "@apollo/react-hooks": "^3.0.1",
     "apollo-boost": "^0.4.4",
     "graphql": "^14.5.3",
-    "prop-types": "^15.17.2",
+    "graphql-tag": "latest",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-apollo": "^3.0.1",
     "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "styled-components": "^4.3.2",
+    "styled-reset": "^3.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
