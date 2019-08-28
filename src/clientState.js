@@ -22,8 +22,8 @@ export const typeDefs =
             mutation: Mutation
         }
         type Query {
-            notesss: [Note]!
-            noteee(id: Int!): Note!
+            notes: [Note]!
+            note(id: Int!): Note!
         }
         type Mutation {
             createNote(title: String!, content: String!): Note
