@@ -64,14 +64,14 @@ class NotesContainer extends Component{
             <>
                 <Header>
                     <Title>
-                        Nomad Notes
+                        Free Notes
                         <Link to={"/add"}>
                             <Button>
                                 <Plus/>
                             </Button>
                         </Link>
                     </Title>
-                    <Subtitle>Taking notes while we learn.</Subtitle>
+                    <Subtitle>Taking notes what you want.</Subtitle>
                 </Header>
                 <Notes>
                     <Query query={GET_NOTES}>

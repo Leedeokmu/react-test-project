@@ -16,7 +16,7 @@ export const defaults = {
 };
 
 export const typeDefs =
-    gql`
+    [gql`
         schema {
             query: Query
             mutation: Mutation
@@ -34,7 +34,7 @@ export const typeDefs =
             title: String!
             content: String!
         }
-    `
+    `]
 ;
 
 export const resolvers = {
