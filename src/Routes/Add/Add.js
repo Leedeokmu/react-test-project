@@ -17,8 +17,8 @@ class Add extends Component{
     render() {
         return (
             <Mutation mutation={ADD_NOTE}>
-                {createNote => {
-                    this.addNote = createNote;
+                {addNote => {
+                    this.addNote = addNote;
                     return (<Editor onSave={this._onSave}/>)
                 }}
             </Mutation>

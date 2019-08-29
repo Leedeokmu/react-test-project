@@ -4,9 +4,12 @@ import MarkdownRenderer from "react-markdown-renderer";
 import TextareaAutosize from "react-textarea-autosize";
 
 const TitleInput = styled(TextareaAutosize)`
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 600;
   width: 100%;
+  &::placeholder {
+    font-weight: 600;
+  }
 `;
 
 const ContentPreview = styled.div`

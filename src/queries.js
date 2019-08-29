@@ -26,3 +26,11 @@ export const ADD_NOTE = gql`
         }
     }
 `
+
+export const EDIT_NOTE = gql`
+    mutation editNote($id: Int!, $title: String!, $content: String!) @client {
+        editNote(id: $id, title: $title, content: $content){
+            id
+        }
+    }
+`
