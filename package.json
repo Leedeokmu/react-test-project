@@ -3,19 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/react-hooks": "^3.0.1",
-    "apollo-boost": "^0.4.4",
-    "graphql": "^14.5.3",
-    "graphql-tag": "latest",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-apollo": "^3.0.1",
-    "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1",
+    "query-string": "^6.8.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
-    "styled-components": "^4.3.2",
-    "styled-reset": "^3.0.3"
+    "react-scripts": "3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
