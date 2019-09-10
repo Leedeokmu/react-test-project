@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {Home, About, Posts} from "../pages";
-import Menu from "../components/Menu";
+import {Home, About, Posts, Users} from "../pages";
+import Menu from "../Components/Menu";
 
 class App extends Component{
 
@@ -15,6 +15,7 @@ class App extends Component{
                     <Route path="/about/:name" component={About}/>
                     <Route path="/about" component={About}/>
                 </Switch>
+                <Route path="/users" component={Users}/>
             </div>
         );
     }
